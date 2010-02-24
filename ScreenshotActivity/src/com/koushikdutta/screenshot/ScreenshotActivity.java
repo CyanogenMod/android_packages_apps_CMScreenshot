@@ -1,7 +1,6 @@
 package com.koushikdutta.screenshot;
 
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,11 +23,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -153,6 +153,8 @@ public class ScreenshotActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		mConnection = new MediaScannerConnection(ScreenshotActivity.this, mMediaScannerConnectionClient);
+		mConnection.connect();
 
 		unzipAssets();
 
@@ -234,7 +236,7 @@ public class ScreenshotActivity extends Activity
 
 			OutputStream os = sh.getOutputStream();
 
-			final String file = "/data/data/com.koushikdutta.screenshot/screenshot.raw";
+			final String file = "/data/data/com.koushikdutta.screenshot/screenshot.bmp";
 
 			int screenshotUid = getUidForPackage("com.koushikdutta.screenshot");
 			String screenshotUser = getUserForPackage("com.koushikdutta.screenshot");
@@ -279,24 +281,19 @@ public class ScreenshotActivity extends Activity
 			});
 
 			FileInputStream fs = new FileInputStream(file);
-			DataInputStream ds = new DataInputStream(fs);
-			byte[] bytes = new byte[fs.available()];
-			ds.readFully(bytes);
-			Parcel parcel = Parcel.obtain();
-			parcel.writeByteArray(bytes);
-			parcel.setDataPosition(0);
-			int size = parcel.readInt();
-			mBitmap = Bitmap.CREATOR.createFromParcel(parcel);
-			mScreenshotFile = String.format("/sdcard/dcim/Screenshot/screenshot%d.png", System.currentTimeMillis());
+			mBitmap = BitmapFactory.decodeStream(fs);
 			try
 			{
+				mScreenshotFile = String.format("/sdcard/dcim/Screenshot/screenshot%d.png", System.currentTimeMillis());
 				FileOutputStream fout = new FileOutputStream(mScreenshotFile);
 				mBitmap.compress(CompressFormat.PNG, 100, fout);
 				fout.close();
+				mConnection.scanFile(mScreenshotFile, null);
 			}
 			catch (Exception ex)
 			{
 			}
+			
 			mHander.post(new Runnable()
 			{
 				public void run()
@@ -311,6 +308,16 @@ public class ScreenshotActivity extends Activity
 			toast.show();
 		}
 	}
+	
+	MediaScannerConnection mConnection;
+	MediaScannerConnection.MediaScannerConnectionClient mMediaScannerConnectionClient = new MediaScannerConnection.MediaScannerConnectionClient() {
+		
+		public void onScanCompleted(String path, Uri uri) {
+		}
+		
+		public void onMediaScannerConnected() {
+		}
+	};
 
 	void takeScreenshot(final int delay)
 	{
