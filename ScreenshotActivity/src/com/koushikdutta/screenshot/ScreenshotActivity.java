@@ -46,7 +46,7 @@ public class ScreenshotActivity extends Activity
 	static Runtime mRuntime = Runtime.getRuntime();
 	final static String mAppRoot = "/data/data/com.koushikdutta.screenshot";
 	final static int BUFSIZE = 10000;
-	final static String APK_PATH = "/data/app/com.koushikdutta.screenshot.apk";
+	String APK_PATH = null;
 	final static String ZIP_FILTER = "assets";
 	final static String LOGTAG = "ScreenshotActivity";
 
@@ -151,6 +151,7 @@ public class ScreenshotActivity extends Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		APK_PATH = getPackageCodePath();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mConnection = new MediaScannerConnection(ScreenshotActivity.this, mMediaScannerConnectionClient);
