@@ -69,8 +69,12 @@ public class ScreenshotActivity extends Activity
         try
         {
             Process p = Runtime.getRuntime().exec("/system/bin/screenshot");
+            Log.d("Screenshot","Ran helper");
+            p.waitFor();
             mBitmap = BitmapFactory.decodeStream(new FileInputStream(mRawScreenshot));
-            p.destroy();
+            File tmpshot = new File(mRawScreenshot);
+            tmpshot.delete();
+
             try
             {
                 File dir = new File(SCREENSHOT_BUCKET_NAME);
@@ -98,8 +102,6 @@ public class ScreenshotActivity extends Activity
         mConnection.scanFile(mScreenshotFile, null);
         mConnection.disconnect();
         finish();
-        /*File tmpshot = new File(mRawScreenshot);
-        tmpshot.delete();*/
     }
 
     MediaScannerConnection mConnection;
