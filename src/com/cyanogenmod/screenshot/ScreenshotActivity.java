@@ -65,13 +65,11 @@ public class ScreenshotActivity extends Activity
 
     void takeScreenshot()
     {
+        String mRawScreenshot = String.format("%s/tmpshot.bmp", Environment.getExternalStorageDirectory().toString());
         try
         {
             Process p = Runtime.getRuntime().exec("/system/bin/screenshot");
-            String mRawScreenshot = String.format("%s/tmpshot.bmp", Environment.getExternalStorageDirectory().toString());
             mBitmap = BitmapFactory.decodeStream(new FileInputStream(mRawScreenshot));
-            /*File tmpshot = new File(mRawScreenshot);
-              tmpshot.delete();*/
             p.destroy();
             try
             {
@@ -98,6 +96,10 @@ public class ScreenshotActivity extends Activity
         toast.show();
 
         mConnection.scanFile(mScreenshotFile, null);
+        mConnection.disconnect();
+        finish();
+        /*File tmpshot = new File(mRawScreenshot);
+        tmpshot.delete();*/
     }
 
     MediaScannerConnection mConnection;
