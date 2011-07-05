@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">螢幕畫面擷取</string>
+
+
+    <string name="toast_error">錯誤：</string>
+    <string name="toast_save_location">螢幕擷取畫面已儲存到</string>
+
+</resources>
