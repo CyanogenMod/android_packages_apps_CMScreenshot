@@ -21,6 +21,8 @@ package com.cyanogenmod.screenshot;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,6 +35,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,6 +77,19 @@ public class ScreenshotActivity extends Activity
             mBitmap = BitmapFactory.decodeStream(new FileInputStream(mRawScreenshot));
             File tmpshot = new File(mRawScreenshot);
             tmpshot.delete();
+
+            int rot = 0;
+            try {
+                Process pRot = Runtime.getRuntime().exec("/system/bin/getprop ro.sf.hwrotation");
+                BufferedReader br = new BufferedReader(new InputStreamReader(pRot.getInputStream()));
+                rot = Integer.parseInt(br.readLine());
+                if(rot > 0){
+		    Log.d("Screenshot","rotation="+rot);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(rot);
+                    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+                }
+            } catch (NumberFormatException nfe) {}
 
             try
             {
