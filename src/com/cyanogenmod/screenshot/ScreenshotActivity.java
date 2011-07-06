@@ -33,11 +33,13 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Environment;
+import android.os.SystemProperties;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -74,6 +76,19 @@ public class ScreenshotActivity extends Activity
             mBitmap = BitmapFactory.decodeStream(new FileInputStream(mRawScreenshot));
             File tmpshot = new File(mRawScreenshot);
             tmpshot.delete();
+
+            // valid values for ro.sf.hwrotation are 0, 90, 180 & 270
+            int rot = SystemProperties.getInt("ro.sf.hwrotation",0);
+            if(rot > 0){
+                Log.d("Screenshot","rotation="+rot);
+                Matrix matrix = new Matrix();
+                matrix.postRotate(rot);
+                // if rot = 90 or 270 swap height and width
+                if(rot==90 || rot==270)
+                    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getHeight(), mBitmap.getWidth(), matrix, true);
+                else
+                    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+            }
 
             try
             {
