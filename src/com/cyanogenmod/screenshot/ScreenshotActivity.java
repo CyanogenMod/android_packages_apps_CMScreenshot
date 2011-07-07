@@ -93,10 +93,10 @@ public class ScreenshotActivity extends Activity
         }
         catch (Exception ex)
         {
-            Toast toast = Toast.makeText(ScreenshotActivity.this, "Error: " + ex.getMessage(), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(ScreenshotActivity.this, getString(R.string.toast_error) + " " + ex.getMessage(), Toast.LENGTH_LONG);
             toast.show();
         }
-        Toast toast = Toast.makeText(ScreenshotActivity.this, "Screenshot is saved at " + mScreenshotFile,Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(ScreenshotActivity.this, getString(R.string.toast_save_location) + " " + mScreenshotFile,Toast.LENGTH_LONG);
         toast.show();
 
         mConnection.scanFile(mScreenshotFile, null);
