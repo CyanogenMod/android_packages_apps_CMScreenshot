@@ -71,7 +71,9 @@ public class ScreenshotActivity extends Activity
             Process p = Runtime.getRuntime().exec("/system/bin/screenshot");
             Log.d("Screenshot","Ran helper");
             p.waitFor();
-            mBitmap = BitmapFactory.decodeStream(new FileInputStream(mRawScreenshot));
+            InputStream rawFile = new FileInputStream(mRawScreenshot);
+            mBitmap = BitmapFactory.decodeStream(rawFile);
+            rawFile.close();
             File tmpshot = new File(mRawScreenshot);
             tmpshot.delete();
 
