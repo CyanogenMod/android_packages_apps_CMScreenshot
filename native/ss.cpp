@@ -16,6 +16,8 @@
 ** limitations under the License.
 */
 
+#define LOG_TAG "CM Screenshot"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,6 +38,7 @@
 
 #include <binder/IMemory.h>
 #include <surfaceflinger/SurfaceComposerClient.h>
+
 
 using namespace android;
 
@@ -66,6 +69,17 @@ struct bmpfile_dibheader {
 
 typedef unsigned char byte;
 
+void* tryfbmap(int framebufferHandle, int size)
+{
+    void *fbPixels = mmap(0, size, PROT_READ, MAP_SHARED, framebufferHandle, 0);
+    if(fbPixels == MAP_FAILED)
+    {
+        LOGD("failed to map memory\n");
+        return NULL;
+    }
+    return fbPixels;
+}
+
 static const int format_map[] = {0,32,32,24,16,32,16,16};
 
 int main(int argc, char **argv)
@@ -78,19 +92,45 @@ int main(int argc, char **argv)
     char ssPath[128];
     int screenshotHandle;
 
+    void* base = NULL;
+    uint32_t w = 0;
+    uint32_t h = 0;
+    uint32_t depth = 0;
+    int totalPixels = 0;
+
     sprintf(ssPath,"%s/tmpshot.bmp",getenv("EXTERNAL_STORAGE"));
 
     ScreenshotClient screenshot;
-    if (screenshot.update() != NO_ERROR)
-        return 0;
 
-    const void* base = screenshot.getPixels();
-    uint32_t w = screenshot.getWidth();
-    uint32_t h = screenshot.getHeight();
-    uint32_t f = screenshot.getFormat();
-    uint32_t depth = format_map[f];
+    if (screenshot.update() != NO_ERROR) {
+        struct fb_var_screeninfo vinfo;
 
-    int totalPixels = w * h;
+        LOGD("surfaceflinger capture failed. Falling back to fb and hoping for the best");
+        framebufferHandle = open("/dev/graphics/fb0", O_RDONLY);
+        if(framebufferHandle < 0)
+            return 0;
+        if(ioctl(framebufferHandle, FBIOGET_VSCREENINFO, &vinfo) < 0) {
+            close(framebufferHandle);
+            return 0;
+        }
+        w = vinfo.xres;
+        h = vinfo.yres;
+        totalPixels = w * h;
+        depth = vinfo.bits_per_pixel;
+        mapSize = totalPixels * (depth/8);
+        fcntl(framebufferHandle, F_SETFD, FD_CLOEXEC);
+        LOGD("Got %dx%dx%d framebuffer",w,h,depth);
+        base = tryfbmap(framebufferHandle, mapSize);
+    } else {
+        uint32_t f = screenshot.getFormat();
+        base = (void *)screenshot.getPixels();
+        w = screenshot.getWidth();
+        h = screenshot.getHeight();
+        totalPixels = w * h;
+        depth = format_map[f];
+    }
+
+
     int totalMem8888 = totalPixels * 4;
     int *rgbaPixels = (int*)malloc(totalMem8888);
     int *endOfImage = rgbaPixels + h * w;
@@ -101,11 +141,12 @@ int main(int argc, char **argv)
 
     if (depth == 16)
     {
-        mapSize = totalPixels * 2;
         short *baseCursor = (short*)base;
-
         int *rgbaPixelsCursor = rgbaPixels;
         int *rgbaLast = rgbaPixels + totalPixels;
+
+        LOGV("Working with 16 depth and a mapsize of %d",mapSize);
+
         for(; rgbaPixelsCursor < rgbaLast; rgbaPixelsCursor++, baseCursor++)
         {
             short pixel = *baseCursor;
@@ -118,7 +159,6 @@ int main(int argc, char **argv)
     }
     else if (depth == 32)
     {
-        mapSize = totalMem8888;
         memcpy(rgbaPixels, base, totalMem8888);
 
         byte *pos = (byte *)rgbaPixels;
@@ -164,7 +204,7 @@ int main(int argc, char **argv)
     dibheader.width = w;
     dibheader.height = h;
     dibheader.nplanes = 1;
-    dibheader.bitspp = depth;
+    dibheader.bitspp = 32;
     dibheader.compress_type = 0;
     dibheader.bmp_bytesz = totalMem8888;
     dibheader.hres = w;
@@ -184,7 +224,10 @@ int main(int argc, char **argv)
 done:
     if (rgbaPixels != NULL)
         free(rgbaPixels);
-
+    if (framebufferHandle >= 0 && mapSize) {
+        munmap(base, mapSize);
+        close(framebufferHandle);
+    }
     return ret;
 }
 
