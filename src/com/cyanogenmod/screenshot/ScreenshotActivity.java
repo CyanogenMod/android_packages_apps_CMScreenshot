@@ -43,6 +43,9 @@ import android.os.SystemProperties;
 import android.util.Log;
 import android.widget.Toast;
 
+import android.view.Display;
+import android.view.WindowManager;
+
 public class ScreenshotActivity extends Activity
 {
     static Bitmap mBitmap = null;
@@ -81,8 +84,12 @@ public class ScreenshotActivity extends Activity
 
             // valid values for ro.sf.hwrotation are 0, 90, 180 & 270
             int rot = SystemProperties.getInt("ro.sf.hwrotation",0);
+
+            Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+
+            // First round, natural device rotation
             if(rot > 0){
-                Log.d("Screenshot","rotation="+rot);
+                Log.d("CMScreenshot","rotation="+rot);
                 Matrix matrix = new Matrix();
                 matrix.postRotate(rot);
                 // if rot = 90 or 270 swap height and width
@@ -90,6 +97,18 @@ public class ScreenshotActivity extends Activity
                     mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getHeight(), mBitmap.getWidth(), matrix, true);
                 else
                     mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+            }
+
+            // Second round, device orientation:
+            // getOrientation returns 0-3 for 0, 90, 180, 270, relative
+            // to the natural position of the device
+            rot = (display.getOrientation() * 90);
+            rot %= 360;
+            if(rot > 0){
+                Log.d("CMScreenshot","rotation="+rot);
+                Matrix matrix = new Matrix();
+                matrix.postRotate((rot*-1));
+                mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
             }
 
             try
