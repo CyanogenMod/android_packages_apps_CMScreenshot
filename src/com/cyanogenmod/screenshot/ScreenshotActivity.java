@@ -74,7 +74,7 @@ public class ScreenshotActivity extends Activity
         try
         {
             Process p = Runtime.getRuntime().exec("/system/bin/screenshot");
-            Log.d("Screenshot","Ran helper");
+            Log.d("CMScreenshot","Ran helper");
             p.waitFor();
             InputStream rawFile = new FileInputStream(mRawScreenshot);
             mBitmap = BitmapFactory.decodeStream(rawFile);
@@ -83,20 +83,16 @@ public class ScreenshotActivity extends Activity
             tmpshot.delete();
 
             // valid values for ro.sf.hwrotation are 0, 90, 180 & 270
-            int rot = SystemProperties.getInt("ro.sf.hwrotation",0);
+            int rot = 360-SystemProperties.getInt("ro.sf.hwrotation",0);
 
             Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
             // First round, natural device rotation
-            if(rot > 0){
+            if(rot > 0 && rot < 360){
                 Log.d("CMScreenshot","rotation="+rot);
                 Matrix matrix = new Matrix();
                 matrix.postRotate(rot);
-                // if rot = 90 or 270 swap height and width
-                if(rot==90 || rot==270)
-                    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getHeight(), mBitmap.getWidth(), matrix, true);
-                else
-                    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+                mBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
             }
 
             // Second round, device orientation:
