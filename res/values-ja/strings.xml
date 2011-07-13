@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">スクリーンショット</string>
+
+
+    <string name="toast_error">エラー:</string>
+    <string name="toast_save_location">スクリーンショットは次の場所に保存しました:</string>
+
+</resources>
