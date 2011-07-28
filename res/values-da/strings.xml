@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Screenshot</string>
+
+
+    <string name="toast_error">Fejl:</string>
+    <string name="toast_save_location">Screenshot gemt i</string>
+
+</resources>
