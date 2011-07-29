@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Skärmdump</string>
+
+    <string name="toast_error">Fel:</string>
+    <string name="toast_save_location">Skärmdump sparades i</string>
+</resources>
