@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bildschirmfoto</string>
+
+
+    <string name="toast_error">Fehler:</string>
+    <string name="toast_save_location">Bildschirmfoto gespeichert in</string>
+
+</resources>
