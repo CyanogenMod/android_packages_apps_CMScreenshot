@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Snímek obrazovky</string>
+
+    <string name="toast_error">Chyba:</string>
+    <string name="toast_save_location">Obrazovka uložena jako</string>
+</resources>
