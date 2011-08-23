@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Скриншот</string>
+
+
+    <string name="toast_error">Помилка:</string>
+    <string name="toast_save_location">Знімок екрана збережено в</string>
+
+</resources>
