@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">스크린샷</string>
+
+
+    <string name="toast_error">오류:</string>
+    <string name="toast_save_location">스크린샷이 다음 경로에 저장되었습니다:</string>
+
+</resources>
