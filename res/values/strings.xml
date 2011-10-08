@@ -5,5 +5,7 @@
 
     <string name="toast_error">Error:</string>
     <string name="toast_save_location">Screenshot is saved at</string>
+    <string name="share_message">Share Screenshot</string>
+    <string name="no_way_to_share">No way to share screenshot</string>
 
 </resources>
