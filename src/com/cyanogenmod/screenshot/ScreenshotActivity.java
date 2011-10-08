@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Environment;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -115,13 +116,28 @@ public class ScreenshotActivity extends Activity
                 FileOutputStream fout = new FileOutputStream(mScreenshotFile);
                 mBitmap.compress(CompressFormat.PNG, 100, fout);
                 fout.close();
+
+                boolean shareScreenshot = (Settings.System.getInt(getContentResolver(),
+                                               Settings.System.SHARE_SCREENSHOT, 0)) == 1;
+                if (shareScreenshot) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("image/png");
+
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(mScreenshotFile)));
+
+                    startActivity(Intent.createChooser(intent, getString(R.string.share_message)));
+                }
+            }
+            catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(ScreenshotActivity.this,
+                        R.string.no_way_to_share,
+                        Toast.LENGTH_SHORT).show();
             }
             catch (Exception ex)
             {
                 finish();
                 throw new Exception("Unable to save screenshot: "+ex);
             }
-
         }
         catch (Exception ex)
         {
