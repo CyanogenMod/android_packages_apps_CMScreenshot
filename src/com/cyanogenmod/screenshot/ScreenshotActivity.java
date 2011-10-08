@@ -154,7 +154,7 @@ public class ScreenshotActivity extends Activity
             {
                 takeScreenshot();
             }
-        }, delay * 1000);
+        }, delay * 1500);
     }
 
 }
