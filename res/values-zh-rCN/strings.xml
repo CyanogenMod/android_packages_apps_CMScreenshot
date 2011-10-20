@@ -5,5 +5,7 @@
 
     <string name="toast_error">错误：</string>
     <string name="toast_save_location">屏幕截图已经保存到</string>
+    <string name="share_message">分享屏幕截图</string>
+    <string name="no_way_to_share">无法分享屏幕截图</string>
 
 </resources>
