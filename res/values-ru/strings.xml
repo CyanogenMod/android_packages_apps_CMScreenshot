@@ -5,5 +5,8 @@
 
     <string name="toast_error">Ошибка:</string>
     <string name="toast_save_location">Скриншот сохранён в</string>
+    <string name="share_message">Отправить скриншот</string>
+    <string name="no_way_to_share">Нет возможности отправить скриншот</string>
+    <string name="not_mounted">Носитель не подключен</string>
 
 </resources>
