@@ -4,4 +4,6 @@
 
     <string name="toast_error">Chyba:</string>
     <string name="toast_save_location">Obrazovka uložena jako</string>
+    <string name="share_message">Sdílet snímek obrazovky</string>
+    <string name="no_way_to_share">Nyní není možné sdílet snímek obrazovky</string>
 </resources>
