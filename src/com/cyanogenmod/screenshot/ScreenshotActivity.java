@@ -19,10 +19,8 @@
 package com.cyanogenmod.screenshot;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -62,26 +60,32 @@ public class ScreenshotActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        if (!(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))) {
+            Toast toast = Toast.makeText(ScreenshotActivity.this, getString(R.string.not_mounted), Toast.LENGTH_LONG);
+            toast.show();
+            finish();
+        }
         mConnection = new MediaScannerConnection(ScreenshotActivity.this, mMediaScannerConnectionClient);
         mConnection.connect();
-
         takeScreenshot(1);
     }
 
     void takeScreenshot()
     {
         String mRawScreenshot = String.format("%s/tmpshot.bmp", Environment.getExternalStorageDirectory().toString());
+
         try
         {
             Process p = Runtime.getRuntime().exec("/system/bin/screenshot");
             Log.d("CMScreenshot","Ran helper");
             p.waitFor();
-            InputStream rawFile = new FileInputStream(mRawScreenshot);
-            mBitmap = BitmapFactory.decodeStream(rawFile);
-            rawFile.close();
+            mBitmap = BitmapFactory.decodeFile(mRawScreenshot);
             File tmpshot = new File(mRawScreenshot);
             tmpshot.delete();
+
+            if (mBitmap == null) {
+                throw new Exception("Unable to save screenshot: mBitmap = "+mBitmap);
+            }
 
             // valid values for ro.sf.hwrotation are 0, 90, 180 & 270
             int rot = 360-SystemProperties.getInt("ro.sf.hwrotation",0);
