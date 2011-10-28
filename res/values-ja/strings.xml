@@ -5,5 +5,9 @@
 
     <string name="toast_error">エラー:</string>
     <string name="toast_save_location">スクリーンショットは次の場所に保存しました:</string>
+    <string name="share_message">スクリーンショットを共有</string>
+    <string name="no_way_to_share">スクリーンショットを共有する手段がありません</string>
+    <string name="not_mounted">メディアがマウントされてません</string>
+
 
 </resources>
