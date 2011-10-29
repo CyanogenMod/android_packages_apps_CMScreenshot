@@ -5,5 +5,8 @@
 
     <string name="toast_error">錯誤：</string>
     <string name="toast_save_location">螢幕擷取畫面已儲存到</string>
+    <string name="share_message">分享螢幕擷取畫面</string>
+    <string name="no_way_to_share">沒有途徑分享螢幕擷取畫面</string>
+    <string name="not_mounted">儲存裝置尚未掛載</string>
 
 </resources>
