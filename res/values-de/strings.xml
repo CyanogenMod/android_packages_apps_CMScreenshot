@@ -5,5 +5,8 @@
 
     <string name="toast_error">Fehler:</string>
     <string name="toast_save_location">Bildschirmfoto gespeichert in</string>
+    <string name="share_message">Bildschirmfoto teilen</string>
+    <string name="no_way_to_share">Es gibt keine Möglichkeit, um das Bildschirmfoto zu teilen</string>
+    <string name="not_mounted">SD-Karte ist nicht eingehängt</string>
 
 </resources>
