@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Képmentés</string>
+
+
+    <string name="toast_error">Hiba:</string>
+    <string name="toast_save_location">Kép elmentve</string>
+    <string name="share_message">Kép megosztása</string>
+    <string name="no_way_to_share">Nincs lehetőség megosztásra</string>
+    <string name="not_mounted">Média nincs csatolva</string>
+
+</resources>
