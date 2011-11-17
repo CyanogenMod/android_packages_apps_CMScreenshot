@@ -6,4 +6,5 @@
     <string name="toast_save_location">Skärmdump sparades i</string>
     <string name="share_message">Dela skärmdump</string>
     <string name="no_way_to_share">Finns inget sätt att dela skärmdump</string>
+    <string name="not_mounted">Media avmonterat</string>
 </resources>
