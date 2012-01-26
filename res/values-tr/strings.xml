@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ekran Görüntüsü</string>
+
+    <string name="toast_error">Hata:</string>
+    <string name="toast_save_location">Ekran görüntüsü kaydedildi:</string>
+    <string name="share_message">Ekran Görüntüsü Paylaş</string>
+    <string name="no_way_to_share">Ekran görüntüsü paylaşılamaz</string>
+    <string name="not_mounted">Aygıt çıkartılmış</string>
+
+</resources>
