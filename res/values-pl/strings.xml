@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Screenshot</string>
+
+
+    <string name="toast_error">Błąd:</string>
+    <string name="toast_save_location">Zrzut ekranu został zapisany na</string>
+    <string name="share_message">Udostępnij zrzut ekranu</string>
+    <string name="no_way_to_share">Brak możliwości udostępnienia</string>
+    <string name="not_mounted">Media niezamontowane</string>
+
+</resources>
