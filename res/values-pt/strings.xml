@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Screenshot</string>
-    <string name="toast_error">Erro:</string>
-    <string name="toast_save_location">Screenshot é gravado em</string>
+  <string name="app_name">Screenshot</string>
+  <string name="toast_error">Erro:</string>
+  <string name="toast_save_location">Screenshot é gravado em</string>
+  <string name="share_message">Compartilhar Screenshot</string>
+  <string name="no_way_to_share">Não há como compartilhar screenshot</string>
+  <string name="not_mounted">Mídia está desmontada</string>
 </resources>
