@@ -6,4 +6,5 @@
     <string name="toast_save_location">Obrazovka uložena jako</string>
     <string name="share_message">Sdílet snímek obrazovky</string>
     <string name="no_way_to_share">Nyní není možné sdílet snímek obrazovky</string>
+    <string name="not_mounted">Úložiště není připojeno</string>
 </resources>
