@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Beeldschermfoto</string>
-
-
+    <string name="app_name">Schermafdruk</string>
     <string name="toast_error">Fout:</string>
-    <string name="toast_save_location">Beeldschermfoto is opgeslagen in</string>
-
+    <string name="toast_save_location">Schermafdruk is opgeslagen in</string>
+    <string name="share_message">Schermafdruk delen</string>
+    <string name="no_way_to_share">Kan schermafdruk niet delen</string>
+    <string name="not_mounted">Media niet aangekoppeld</string>
 </resources>
