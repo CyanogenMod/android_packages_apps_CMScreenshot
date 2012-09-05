@@ -3,5 +3,8 @@
     <string name="app_name">Snímka obrazovky</string>
 
     <string name="toast_error">Chyba:</string>
-    <string name="toast_save_location">Obrazovka uložená ako</string>
+    <string name="toast_save_location">Snímka bola uložená ako</string>
+    <string name="share_message">Zdieľať snímku obrazovky</string>
+    <string name="no_way_to_share">Nie je možné zdieľať snímku obrazovky</string>
+    <string name="not_mounted">Úložisko nie je pripojené</string>
 </resources>
