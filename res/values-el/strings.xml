@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Στιγμιότυπο οθόνης</string>
+
+
+    <string name="toast_error">Σφάλμα:</string>
+    <string name="toast_save_location">Το στιγμιότυπο οθόνης αποθηκεύτηκε στο</string>
+    <string name="share_message">Διαμοιρασμός στιγμιότυπου</string>
+    <string name="no_way_to_share">Δεν υπάρχει τρόπος να μοιραστείτε το στιγμιότυπο</string>
+    <string name="not_mounted">Δεν υπάρχει προσαρτημένο μέσο αποθήκευσης</string>
+
+</resources>
