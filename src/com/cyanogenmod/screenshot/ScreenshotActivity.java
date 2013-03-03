@@ -168,6 +168,6 @@ public class ScreenshotActivity extends Activity
             public void run() {
                 takeScreenshot();
             }
-        }, delay * 1000);
+        }, delay * 1500);
     }
 }
